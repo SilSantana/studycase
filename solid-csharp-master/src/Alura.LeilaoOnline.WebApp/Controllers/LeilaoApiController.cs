@@ -58,9 +58,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
             _leilaoDao.Remover(leilao);
             return NoContent();
         }
-
-
-      
+              
 
     }
 }

@@ -14,17 +14,6 @@ namespace Alura.LeilaoOnline.WebApp.Dados.EFCore
             _context = new AppDbContext();
         }
 
-        public IEnumerable<Categoria> BuscarCategorias()
-        {
-            return _context.Categorias.ToList();
-        }
-
-        public IEnumerable<Categoria> BuscarCategoriasPorLeilao()
-        {
-            return _context.Categorias
-                   .Include(c => c.Leiloes).ToList();
-        }
-
         public IEnumerable<Leilao> BuscarLeiloes()
         {
             return _context.Leiloes

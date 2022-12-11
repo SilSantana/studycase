@@ -5,10 +5,7 @@ namespace Alura.LeilaoOnline.WebApp.Dados
 {
     public interface ILeilaoDao
     {
-        IEnumerable<Categoria> BuscarCategorias();
-
-        IEnumerable<Categoria> BuscarCategoriasPorLeilao();
-
+       
         IEnumerable<Leilao> BuscarLeiloes();
 
         Leilao BuscarPorId(int id);
@@ -18,7 +15,6 @@ namespace Alura.LeilaoOnline.WebApp.Dados
         void Atualizar(Leilao leilao);
 
         void Adicionar(Leilao leilao);
-
 
     }
 }

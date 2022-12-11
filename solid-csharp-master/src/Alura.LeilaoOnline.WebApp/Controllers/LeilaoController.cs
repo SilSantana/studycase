@@ -10,10 +10,12 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
     {
 
         ILeilaoDao _leilaoDao;
+        ICategoriaDao _categoriaDao;
 
-        public LeilaoController(ILeilaoDao leilaoDao)
+        public LeilaoController(ILeilaoDao leilaoDao, ICategoriaDao categoriaDao)
         {
             _leilaoDao = leilaoDao;
+            _categoriaDao = categoriaDao;
         }
 
         public IActionResult Index()
@@ -25,7 +27,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpGet]
         public IActionResult Insert()
         {
-            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
+            ViewData["Categorias"] = _categoriaDao.BuscarCategorias();
             ViewData["Operacao"] = "Inclusão";
             return View("Form");
         }
@@ -38,7 +40,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
                 _leilaoDao.Adicionar(model);
                 return RedirectToAction("Index");
             }
-            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
+            ViewData["Categorias"] = _categoriaDao.BuscarCategorias();
             ViewData["Operacao"] = "Inclusão";
             return View("Form", model);
         }
@@ -46,7 +48,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
+            ViewData["Categorias"] = _categoriaDao.BuscarCategorias();
             ViewData["Operacao"] = "Edição";
             var leilao = _leilaoDao.BuscarPorId(id);
             if (leilao == null) return NotFound();
@@ -61,7 +63,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
                 _leilaoDao.Atualizar(model);
                 return RedirectToAction("Index");
             }
-            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
+            ViewData["Categorias"] = _categoriaDao.BuscarCategorias();
             ViewData["Operacao"] = "Edição";
             return View("Form", model);
         }

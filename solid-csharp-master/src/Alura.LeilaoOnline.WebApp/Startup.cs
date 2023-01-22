@@ -1,5 +1,7 @@
 using Alura.LeilaoOnline.WebApp.Dados;
 using Alura.LeilaoOnline.WebApp.Dados.EFCore;
+using Alura.LeilaoOnline.WebApp.Services.Handlers;
+using Alura.LeilaoOnline.WebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +12,11 @@ namespace Alura.LeilaoOnline.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddTransient<ILeilaoDao, LeilaoDaoComEFCore>();
             services.AddTransient<ICategoriaDao, CategoriaDaoComEFCore>();
+            services.AddTransient<ILeilaoDao, LeilaoDaoComEFCore>();
+            services.AddTransient<IAdminService, ArquivamentoAdminService>();
+            services.AddTransient<IProdutoService, DefaultProdutoService>();
+            services.AddDbContext<AppDbContext>();
 
             services
                 .AddControllersWithViews()

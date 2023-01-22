@@ -9,10 +9,12 @@ namespace Alura.LeilaoOnline.WebApp.Services.Handlers
     public class DefaultAdminService : IAdminService
     {
         private readonly ILeilaoDao _leilaoDao;
+        private readonly ICategoriaDao _categoriaDao;
 
-        public DefaultAdminService(ILeilaoDao leilaoDao)
+        public DefaultAdminService(ILeilaoDao leilaoDao, ICategoriaDao categoriaDao)
         {
             _leilaoDao = leilaoDao;
+            _categoriaDao = categoriaDao;
         }
 
         public void CadastraLeilao(Leilao leilao)
@@ -22,22 +24,22 @@ namespace Alura.LeilaoOnline.WebApp.Services.Handlers
 
         public IEnumerable<Categoria> ConsultaCategorias()
         {
-            return _leilaoDao.BuscarTodasCategorias();
+            return _categoriaDao.BuscarTodos();
         }
 
         public Leilao ConsultaLeilaoPorId(int id)
         {
-            return _leilaoDao.BuscarLeilaoPorId(id);
+            return _leilaoDao.BuscarPorId(id);
         }
 
         public IEnumerable<Leilao> ConsultaLeiloes()
         {
-            return _leilaoDao.BuscarTodosLeiloes();
+            return _leilaoDao.BuscarTodos();
         }
 
         public void FinalizaPregaoDoLeilaoComId(int id)
         {
-            var leilao = _leilaoDao.BuscarLeilaoPorId(id);
+            var leilao = _leilaoDao.BuscarPorId(id);
             if (leilao != null && leilao.Situacao == SituacaoLeilao.Pregao)
             {
                 leilao.Situacao = SituacaoLeilao.Finalizado;
@@ -48,7 +50,7 @@ namespace Alura.LeilaoOnline.WebApp.Services.Handlers
 
         public void IniciaPregaoDoLeilaoComId(int id)
         {
-            var leilao = _leilaoDao.BuscarLeilaoPorId(id);
+            var leilao = _leilaoDao.BuscarPorId(id);
             if (leilao != null && leilao.Situacao == SituacaoLeilao.Rascunho)
             {
                 leilao.Situacao = SituacaoLeilao.Pregao;

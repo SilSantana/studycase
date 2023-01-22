@@ -8,27 +8,21 @@ namespace Alura.LeilaoOnline.WebApp.Dados.EFCore
     public class CategoriaDaoComEFCore : ICategoriaDao
     {
 
-        AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public CategoriaDaoComEFCore()
         {
             _context = new AppDbContext();
         }
 
-        public IEnumerable<Categoria> BuscarCategorias()
+        public Categoria ConsultaCategoriaPorId(int id)
         {
-            return _context.Categorias.ToList();
+            return _context.Categorias.Include(c => c.Leiloes).First(c => c.Id == id);
         }
 
-        public IEnumerable<Categoria> BuscarCategoriasPorLeilao()
+        public IEnumerable<Categoria> ConsultaCategorias()
         {
-            return _context.Categorias
-                   .Include(c => c.Leiloes).ToList();
-        }
-
-        public Categoria BuscarPorId(int id)
-        {
-            return _context.Categorias.Find(id);
+            return _context.Categorias.Include(c => c.Leiloes);
         }
     }
 }

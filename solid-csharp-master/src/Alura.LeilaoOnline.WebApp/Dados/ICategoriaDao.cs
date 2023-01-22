@@ -5,11 +5,8 @@ namespace Alura.LeilaoOnline.WebApp.Dados
 {
     public interface ICategoriaDao
     {
-        IEnumerable<Categoria> BuscarCategorias();
-
-        IEnumerable<Categoria> BuscarCategoriasPorLeilao();
-
-        Categoria BuscarPorId(int id);
+        IEnumerable<Categoria> ConsultaCategorias();
+        Categoria ConsultaCategoriaPorId(int id);
 
     }
 }

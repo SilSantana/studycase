@@ -1,18 +1,16 @@
 ﻿using Alura.LeilaoOnline.WebApp.Dados;
 using Alura.LeilaoOnline.WebApp.Models;
 using Alura.LeilaoOnline.WebApp.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Alura.LeilaoOnline.WebApp.Services
+namespace Alura.LeilaoOnline.WebApp.Services.Handlers
 {
     public class DefaultProdutoService : IProdutoService
     {
 
-        ILeilaoDao _leilaoDao;
-        ICategoriaDao _categoriaDao;
+        private readonly ILeilaoDao _leilaoDao;
+        private readonly ICategoriaDao _categoriaDao;
 
         public DefaultProdutoService(ILeilaoDao leilaoDao, ICategoriaDao categoriaDao)
         {
@@ -23,12 +21,12 @@ namespace Alura.LeilaoOnline.WebApp.Services
 
         public Categoria ConsultaCategoriaPorIdComLeiloesEmPregao(int id)
         {
-            return _categoriaDao.BuscarPorId(id);
+            return _categoriaDao.ConsultaCategoriaPorId(id);
         }
 
         public IEnumerable<CategoriaComInfoLeilao> ConsultaCategoriasComTotalDeLeiloesEmPregao()
         {
-            return _categoriaDao.BuscarCategorias()
+            return _categoriaDao.ConsultaCategorias()
                 .Select(c => new CategoriaComInfoLeilao
                 { 
                     Id = c.Id,
@@ -42,11 +40,12 @@ namespace Alura.LeilaoOnline.WebApp.Services
 
         public IEnumerable<Leilao> PesquisaLeiloesEmPregaoPorTermo(string termo)
         {
-            return _leilaoDao.BuscarLeiloes()
+            var termoNormalized = termo.ToUpper();
+            return _leilaoDao.BuscarTodosLeiloes()
                  .Where(c =>
-                     c.Titulo.ToUpper().Contains(termo) ||
-                     c.Descricao.ToUpper().Contains(termo) ||
-                     c.Categoria.Descricao.ToUpper().Contains(termo));
+                     c.Titulo.ToUpper().Contains(termoNormalized) ||
+                     c.Descricao.ToUpper().Contains(termoNormalized) ||
+                     c.Categoria.Descricao.ToUpper().Contains(termoNormalized));
         }
     }
 }
